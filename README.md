@@ -22,7 +22,7 @@ Put `-d` before your `.funcy` file if you want debug information.
 ### Naming
 
 - `id`: Index of element in memory
-- `expr`: 32 bit integer
+- `expr`: 32-bit integer, you have to put an 'i' before the number (`i1234`)
 - `inst`: Index of instruction
 
 ### Data Instructions
