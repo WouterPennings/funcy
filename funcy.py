@@ -18,6 +18,7 @@ class InstructionType(Enum):
     Min = 8
     Multiply = 9
     Divide = 10
+    Write = 11
 
 
 class Instruction:
@@ -61,6 +62,8 @@ def ParseInstructions(statements):
                     instructions.append(Instruction(InstructionType.Push, x[1], file, line))
                 case "Print":
                     instructions.append(Instruction(InstructionType.Print, "", file, line))
+                case "Write":
+                    instructions.append(Instruction(InstructionType.Write, "", file, line))
                 case "Equal":
                     instructions.append(Instruction(InstructionType.Equal, "", file, line))
                 case "Greater":
@@ -119,7 +122,13 @@ class Interpreter:
                         print("RunTime Error (line: {}):\n\t Stack had size of 0, but program popped".format(
                             instruction.line))
                         exit(1)
-                    print(self.stack[-1])
+                    print(self.stack[-1], end="")
+                case InstructionType.Write:
+                    if len(self.stack) == 0:
+                        print("RunTime Error (line: {}):\n\t Stack had size of 0, but program popped".format(
+                            instruction.line))
+                        exit(1)
+                    print(chr(self.stack[-1]), end="")
                 case InstructionType.Equal:
                     if len(self.stack) < 2:
                         print(
