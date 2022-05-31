@@ -40,6 +40,11 @@ class Instruction:
         return self.file + "({})".format(self.line) + " -> {}".format(self.iType)
 
 
+def RuntimeError(line, text):
+    print("\nRunTime Error (line: {}):\n\t{}".format(line, text))
+    exit(1)
+
+
 def ParseInstructions(statements):
     instructions = []
     line = 1
@@ -121,49 +126,40 @@ class Interpreter:
                     self.Push(instruction)
                 case InstructionType.Print:
                     if len(self.stack) == 0:
-                        print("\nRunTime Error (line: {}):\n\t Stack had size of 0, but program popped".format(
-                            instruction.line))
-                        exit(1)
+                        RuntimeError(instruction.line, "Stack had size of 0, but program popped"
+                                     .format(instruction.line))
                     print(self.stack[-1], end="")
                 case InstructionType.Write:
                     if len(self.stack) == 0:
-                        print("\nRunTime Error (line: {}):\n\t Stack had size of 0, but program popped".format(
-                            instruction.line))
-                        exit(1)
+                        RuntimeError(instruction.line, "Stack had size of 0, but program popped"
+                                     .format(instruction.line))
                     print(chr(self.stack[-1]), end="")
                 case InstructionType.Equal:
                     if len(self.stack) < 2:
-                        print(
-                            "\nRunTime Error (line: {}):\n\t Equal instruction needs two values, but the stack has: {}".format(
-                                instruction.line, len(self.stack)))
-                        exit(1)
+                        RuntimeError(Instruction.line, " Equal instruction needs two values, but the stack has: {}"
+                                     .format(instruction.line, len(self.stack)))
                     left = self.stack[-1]
                     right = self.stack[-2]
                     if left != right:
                         self.cursor += 1
                 case InstructionType.Greater:
                     if len(self.stack) < 2:
-                        print("\nRunTime Error (line: {}):\n\t Greater instruction needs two values, but the stack "
-                              "has: {}".format(instruction.line, len(self.stack)))
-                        exit(1)
+                        RuntimeError(Instruction.line, "Greater instruction needs two values, but the stack has: {}"
+                                     .format(instruction.line, len(self.stack)))
                     left = self.stack[-1]  # Top is stack is left
                     right = self.stack[-2]  # Second of stack is right
                     if left > right:
                         self.cursor += 1
                 case InstructionType.Jump:
                     if len(self.instructions) < int(instruction.argument):
-                        print("\nRunTime Error (line: {}):\n\t Jump instruction jumps to line that does not exists, "
-                              "there are: {} lines".format(instruction.line, self.lines))
-                        exit(1)
-
+                        RuntimeError(Instruction.line, "Jump instruction jumps to line that does not exists, "
+                                                       "there are: {} lines".format(instruction.line, self.lines))
                     # There is a -1, because every loop is + 1. AKA compensation
                     self.cursor = int(instruction.argument) - 2
                 case InstructionType.Add:
                     if len(self.stack) < 2:
-                        print(
-                            "\nRunTime Error (line: {}):\n\t Add instruction needs to values, but the stack has: {}".format(
-                                instruction.line, len(self.stack)))
-                        exit(1)
+                        RuntimeError(instruction.line, "Add instruction needs to values, but the stack has: {}"
+                                     .format(len(self.stack)))
                     left = self.stack[-1]
                     right = self.stack[-2]
                     value = "i" + str(left + right)
@@ -171,10 +167,8 @@ class Interpreter:
                     self.Push(instruction)
                 case InstructionType.Min:
                     if len(self.stack) < 2:
-                        print(
-                            "\nRunTime Error (line: {}):\n\t Min instruction needs to values, but the stack has: {}".format(
-                                instruction.line, len(self.stack)))
-                        exit(1)
+                        RuntimeError(instruction.line, "Min instruction needs to values, but the stack has: {}"
+                                     .format(len(self.stack)))
                     left = self.stack[-1]
                     right = self.stack[-2]
                     value = "i" + str(left - right)
@@ -182,11 +176,8 @@ class Interpreter:
                     self.Push(instruction)
                 case InstructionType.Multiply:
                     if len(self.stack) < 2:
-                        print(
-                            "\nRunTime Error (line: {}):\n\t Multiply instruction needs to values, but the stack has: "
-                            "{}".format(
-                                instruction.line, len(self.stack)))
-                        exit(1)
+                        RuntimeError(instruction.line, "Multiply instruction needs to values, but the stack has: {}"
+                                     .format(len(self.stack)))
                     left = self.stack[-1]
                     right = self.stack[-2]
                     value = "i" + str(left * right)
@@ -194,14 +185,11 @@ class Interpreter:
                     self.Push(instruction)
                 case InstructionType.Divide:
                     if len(self.stack) < 2:
-                        print(
-                            "\nRunTime Error (line: {}):\n\t Divide instruction needs to values, but the stack has: {}".format(
-                                instruction.line, len(self.stack)))
-                        exit(1)
+                        RuntimeError(Instruction.line, "Divide instruction needs to values, but the stack has: {}"
+                                     .format(len(self.stack)))
                     left = self.stack[-1]
                     right = self.stack[-2]
-                    value = "i" + str(round(left / right))
-                    instruction.argument = value
+                    instruction.argument = "i" + str(round(left / right))
                     self.Push(instruction)
 
             # Next instruction
@@ -209,17 +197,14 @@ class Interpreter:
 
     def Pop(self, instruction: Instruction):
         if len(self.stack) == 0:
-            print("\nRunTime Error (line: {}):\n\t Stack had size of 0, but program popped".format(instruction.line))
-            exit(1)
+            RuntimeError(Instruction.line, "Stack had size of 0, but program popped")
 
         # Pops the top of stack
         self.stack.pop(len(self.stack) - 1)
 
     def Push(self, instruction: Instruction):
         if len(self.stack) == STACK_SIZE:
-            print("\nRunTime Error (line: {}):\n\t Stack was full (max 8 values), but program pushed".format(
-                instruction.line))
-            exit(1)
+            RuntimeError(instruction.line, "Stack was full (max 8 values), but program pushed")
 
         # Pushes value of memory register or expression to top of stack
         if instruction.argument[0] == "i":
@@ -230,8 +215,7 @@ class Interpreter:
     def Store(self, instruction: Instruction):
         if instruction.argument == "":
             if len(self.stack) < 2:
-                print("\nRunTime Error (line: {}):\n\t Stack had less than 2 elements".format(instruction.line))
-                exit(1)
+                RuntimeError(instruction.line, "Stack had less than 2 elements")
             value = self.stack[-1]
             memoryIndex = self.stack[-2] + 1
             self.CreateMemoryIfNeeded(memoryIndex)
@@ -240,11 +224,10 @@ class Interpreter:
 
         idx = int(instruction.argument)
         if idx > 1024 or idx < 0:
-            print("\nRunTime Error (line: {}):\n\t Memory location needs to be between 0 and 1024, you had: '{}'"
-                  .format(instruction.line, instruction.argument))
-            exit(1)
+            RuntimeError(instruction.line, "Memory location needs to be between 0 and 1024, you had: '{}'"
+                         .format(instruction.argument))
         if len(self.stack) == 0:
-            print("\nRunTime Error (line: {}): Stack had size of 0".format(instruction.line))
+            RuntimeError(instruction.line, "Stack had size of 0")
 
         # Puts the value of the top of the stack in a memory register
         self.CreateMemoryIfNeeded(idx + 1)
