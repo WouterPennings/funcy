@@ -50,10 +50,13 @@ def ParseInstructions(statements):
                 case "Pop":
                     instructions.append(Instruction(InstructionType.Pop, "", file, line))
                 case "Store":
-                    if not x[1].isnumeric():
+                    if len(x) < 2:
+                        instructions.append(Instruction(InstructionType.Store, "", file, line))
+                    elif not x[1].isnumeric():
                         print("Syntax Error {}: Store needs to be and index\n   {}".format(line, stat))
                         exit(1)
-                    instructions.append(Instruction(InstructionType.Store, x[1], file, line))
+                    else:
+                        instructions.append(Instruction(InstructionType.Store, x[1], file, line))
                 case "Push":
                     if not x[1][0] == "i" and not x[1].isnumeric():
                         print(
@@ -89,7 +92,6 @@ def ParseInstructions(statements):
 
 
 STACK_SIZE = 8
-MEMORY_SIZE = 1024
 
 
 class Interpreter:
@@ -119,20 +121,20 @@ class Interpreter:
                     self.Push(instruction)
                 case InstructionType.Print:
                     if len(self.stack) == 0:
-                        print("RunTime Error (line: {}):\n\t Stack had size of 0, but program popped".format(
+                        print("\nRunTime Error (line: {}):\n\t Stack had size of 0, but program popped".format(
                             instruction.line))
                         exit(1)
                     print(self.stack[-1], end="")
                 case InstructionType.Write:
                     if len(self.stack) == 0:
-                        print("RunTime Error (line: {}):\n\t Stack had size of 0, but program popped".format(
+                        print("\nRunTime Error (line: {}):\n\t Stack had size of 0, but program popped".format(
                             instruction.line))
                         exit(1)
                     print(chr(self.stack[-1]), end="")
                 case InstructionType.Equal:
                     if len(self.stack) < 2:
                         print(
-                            "RunTime Error (line: {}):\n\t Equal instruction needs two values, but the stack has: {}".format(
+                            "\nRunTime Error (line: {}):\n\t Equal instruction needs two values, but the stack has: {}".format(
                                 instruction.line, len(self.stack)))
                         exit(1)
                     left = self.stack[-1]
@@ -141,8 +143,8 @@ class Interpreter:
                         self.cursor += 1
                 case InstructionType.Greater:
                     if len(self.stack) < 2:
-                        print("RunTime Error (line: {}):\n\t Greater instruction needs two values, but the stack has: "
-                              "{}".format(instruction.line, len(self.stack)))
+                        print("\nRunTime Error (line: {}):\n\t Greater instruction needs two values, but the stack "
+                              "has: {}".format(instruction.line, len(self.stack)))
                         exit(1)
                     left = self.stack[-1]  # Top is stack is left
                     right = self.stack[-2]  # Second of stack is right
@@ -150,7 +152,7 @@ class Interpreter:
                         self.cursor += 1
                 case InstructionType.Jump:
                     if len(self.instructions) < int(instruction.argument):
-                        print("RunTime Error (line: {}):\n\t Jump instruction jumps to line that does not exists, "
+                        print("\nRunTime Error (line: {}):\n\t Jump instruction jumps to line that does not exists, "
                               "there are: {} lines".format(instruction.line, self.lines))
                         exit(1)
 
@@ -159,7 +161,7 @@ class Interpreter:
                 case InstructionType.Add:
                     if len(self.stack) < 2:
                         print(
-                            "RunTime Error (line: {}):\n\t Add instruction needs to values, but the stack has: {}".format(
+                            "\nRunTime Error (line: {}):\n\t Add instruction needs to values, but the stack has: {}".format(
                                 instruction.line, len(self.stack)))
                         exit(1)
                     left = self.stack[-1]
@@ -170,7 +172,7 @@ class Interpreter:
                 case InstructionType.Min:
                     if len(self.stack) < 2:
                         print(
-                            "RunTime Error (line: {}):\n\t Min instruction needs to values, but the stack has: {}".format(
+                            "\nRunTime Error (line: {}):\n\t Min instruction needs to values, but the stack has: {}".format(
                                 instruction.line, len(self.stack)))
                         exit(1)
                     left = self.stack[-1]
@@ -181,7 +183,8 @@ class Interpreter:
                 case InstructionType.Multiply:
                     if len(self.stack) < 2:
                         print(
-                            "RunTime Error (line: {}):\n\t Multiply instruction needs to values, but the stack has: {}".format(
+                            "\nRunTime Error (line: {}):\n\t Multiply instruction needs to values, but the stack has: "
+                            "{}".format(
                                 instruction.line, len(self.stack)))
                         exit(1)
                     left = self.stack[-1]
@@ -192,7 +195,7 @@ class Interpreter:
                 case InstructionType.Divide:
                     if len(self.stack) < 2:
                         print(
-                            "RunTime Error (line: {}):\n\t Divide instruction needs to values, but the stack has: {}".format(
+                            "\nRunTime Error (line: {}):\n\t Divide instruction needs to values, but the stack has: {}".format(
                                 instruction.line, len(self.stack)))
                         exit(1)
                     left = self.stack[-1]
@@ -206,7 +209,7 @@ class Interpreter:
 
     def Pop(self, instruction: Instruction):
         if len(self.stack) == 0:
-            print("RunTime Error (line: {}):\n\t Stack had size of 0, but program popped".format(instruction.line))
+            print("\nRunTime Error (line: {}):\n\t Stack had size of 0, but program popped".format(instruction.line))
             exit(1)
 
         # Pops the top of stack
@@ -214,7 +217,7 @@ class Interpreter:
 
     def Push(self, instruction: Instruction):
         if len(self.stack) == STACK_SIZE:
-            print("RunTime Error (line: {}):\n\t Stack was full (max 8 values), but program pushed".format(
+            print("\nRunTime Error (line: {}):\n\t Stack was full (max 8 values), but program pushed".format(
                 instruction.line))
             exit(1)
 
@@ -225,20 +228,32 @@ class Interpreter:
             self.stack.append(self.memory[int(instruction.argument)-1])
 
     def Store(self, instruction: Instruction):
+        if instruction.argument == "":
+            if len(self.stack) < 2:
+                print("\nRunTime Error (line: {}):\n\t Stack had less than 2 elements".format(instruction.line))
+                exit(1)
+            value = self.stack[-1]
+            memoryIndex = self.stack[-2] + 1
+            self.CreateMemoryIfNeeded(memoryIndex)
+            self.memory[memoryIndex - 1] = value
+            return
+
         idx = int(instruction.argument)
         if idx > 1024 or idx < 0:
-            print("RunTime Error (line: {}):\n\t Memory location needs to be between 0 and 1024, you had: '{}'"
+            print("\nRunTime Error (line: {}):\n\t Memory location needs to be between 0 and 1024, you had: '{}'"
                   .format(instruction.line, instruction.argument))
             exit(1)
         if len(self.stack) == 0:
-            print("RunTime Error (line: {}): Stack had size of 0".format(instruction.line))
+            print("\nRunTime Error (line: {}): Stack had size of 0".format(instruction.line))
 
         # Puts the value of the top of the stack in a memory register
-        x = idx-len(self.memory)
-        for _ in range(x):
-            self.memory.append(None)
+        self.CreateMemoryIfNeeded(idx + 1)
         self.memory[idx - 1] = self.stack[-1]
 
+    def CreateMemoryIfNeeded(self, index):
+        x = index-len(self.memory)
+        for _ in range(x):
+            self.memory.append(None)
 
 if __name__ == "__main__":
     start = time.time()

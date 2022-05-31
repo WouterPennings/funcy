@@ -28,9 +28,11 @@ Put `-d` before your `.funcy` file if you want debug information.
 ### Data Instructions
 
 - `Pop`: Pops the top of the stack
-- `Store <id>`: Saves the value on top of stack in a memory register  
+- `Store <id|null>`: Saves the value on top of stack in a memory register
+  - When `Store` has no arguments, it will use the top of the stack as the value and the second to top as memory location. Will free enough memory when there is not enough
 - `Push  <id|expr>`: Pushes a value of a memory register or a value to the top of stack
-- `Print`: prints the value on the top of the stack in the terminal
+- `Print`: Prints the value on the top of the stack in the terminal
+- `Write`: Prints the value of the top of the stack as ASCII character (Decimal)
 
 ### Logic Instructions
 

@@ -1,20 +1,30 @@
+; 'h'
 Push i104
 Write
 
+; 'e'
 Push i101
 Write
 
+; 'l'
 Push i108
 Write
 
+; 'l'
 Push i108
 Write
 
+; 'o'
 Push i111
 Write
 
-pop
-pop
-pop
-pop
-pop
+; '\n'
+Push i10
+Write
+
+Pop
+Pop
+Pop
+Pop
+Pop
+Pop
