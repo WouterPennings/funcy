@@ -3,6 +3,7 @@ import time
 from enum import Enum
 
 file = ""
+debug = False
 
 
 class InstructionType(Enum):
@@ -36,10 +37,6 @@ class Instruction:
         if self.argument != "":
             return self.file + "({})".format(self.line) + " -> {} {}".format(self.iType, self.argument)
         return self.file + "({})".format(self.line) + " -> {}".format(self.iType)
-
-
-def GetStatements(str):
-    return str.split("\n")
 
 
 def ParseInstructions(statements):
@@ -234,10 +231,10 @@ class Interpreter:
         self.memory[idx - 1] = self.stack[-1]
 
 
-debug = False
-
 if __name__ == "__main__":
     start = time.time()
+
+    # Flag parsing and stuff
     args = sys.argv[1:]
     if len(args) == 0:
         print("Please provide a file to execute")
@@ -251,12 +248,16 @@ if __name__ == "__main__":
         else:
             print("Unknown flag: {}. Existing flags: -d".format(args[0]))
             exit(1)
+
+    # Actually running the interpreter
     f = open(file, "r")
-    statements = GetStatements(f.read())
+    statements = f.read().split("\n")
     instructions, lines = ParseInstructions(statements)
     interpreter = Interpreter(instructions, lines)
     interpreter.Evaluate()
     end = time.time()
+
+    # Debug prints time, if selected
     if debug:
         print("\nDEBUG INFO:")
         print("    INSTRUCTIONS:")
