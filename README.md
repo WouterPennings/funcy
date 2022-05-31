@@ -4,6 +4,15 @@ An interpreted language that emulates an assembly (Kind of); Mostly just a fun l
 User is required to use a stack, and can save values in memory. The challenge is to use 
 a little memory as possible. Oh, do not forgot to pop the stack, it is not very big...
 
+## How to run
+
+1. Clone the repository
+2. Create `main.funcy`, and write a program
+3. Make sure you have Python3.10 installed
+4. Type this in the terminal: `python3.10 funcy.py main.funcy`
+
+Put `-d` before your `.funcy` file if you want debug information.
+
 ## Specification
 
 - A stack of 8 elements is created which stores integers
