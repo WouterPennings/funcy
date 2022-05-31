@@ -2,7 +2,7 @@ Push i1
 Store 1
 Pop
 
-Push i10
+Push i10000
 Push 1
 Equal
 Jump 15

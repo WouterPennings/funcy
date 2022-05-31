@@ -223,11 +223,6 @@ class Interpreter:
             return
 
         idx = int(instruction.argument)
-        if idx > 1024 or idx < 0:
-            RuntimeError(instruction.line, "Memory location needs to be between 0 and 1024, you had: '{}'"
-                         .format(instruction.argument))
-        if len(self.stack) == 0:
-            RuntimeError(instruction.line, "Stack had size of 0")
 
         # Puts the value of the top of the stack in a memory register
         self.CreateMemoryIfNeeded(idx + 1)
