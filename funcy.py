@@ -234,7 +234,7 @@ class Interpreter:
         self.memory[idx - 1] = self.stack[-1]
 
     def CreateMemoryIfNeeded(self, index):
-        x = index-len(self.memory)
+        x = index-len(self.memory) - 1
         if x < 0:
             x = 0
         for _ in range(x):
@@ -262,15 +262,19 @@ if __name__ == "__main__":
     f = open(file, "r")
     statements = f.read().split("\n")
     instructions, lines = ParseInstructions(statements)
+    if debug:
+        print("\nDEBUG INFO BEGIN:")
+        print("    INSTRUCTIONS:")
+        for i in instructions:
+            print("        {}".format(i))
+        print("DEBUG INFO END\n")
     interpreter = Interpreter(instructions, lines)
     interpreter.Evaluate()
     end = time.time()
 
     # Debug prints time, if selected
     if debug:
-        print("\nDEBUG INFO:")
-        print("    INSTRUCTIONS:")
-        for i in instructions:
-            print("        {}".format(i))
+        print("\nDEBUG INFO BEGIN:")
         print("    MEMORY USAGE: {}".format(len(interpreter.memory)))
         print("    EXECUTION TIME: {} sec".format(end-start))
+        print("DEBUG INFO END:")
