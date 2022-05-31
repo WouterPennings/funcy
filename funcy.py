@@ -252,6 +252,8 @@ class Interpreter:
 
     def CreateMemoryIfNeeded(self, index):
         x = index-len(self.memory)
+        if x < 0:
+            x = 0
         for _ in range(x):
             self.memory.append(None)
 
