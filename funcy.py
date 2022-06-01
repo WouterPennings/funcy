@@ -19,6 +19,9 @@ class InstructionType(Enum):
     Multiply = 9
     Divide = 10
     Write = 11
+    Modulo = 12
+    Swap = 13
+    Rot = 14
 
 
 class Instruction:
@@ -89,6 +92,12 @@ def ParseInstructions(statements):
                     instructions.append(Instruction(InstructionType.Multiply, "", file, line))
                 case "Divide":
                     instructions.append(Instruction(InstructionType.Divide, "", file, line))
+                case "Modulo":
+                    instructions.append(Instruction(InstructionType.Modulo, "", file, line))
+                case "Swap":
+                    instructions.append(Instruction(InstructionType.Swap, "", file, line))
+                case "Rot":
+                    instructions.append(Instruction(InstructionType.Rot, "", file, line))
                 case _:
                     print("Syntax Error {}: '{}' is not an instruction\n   {}".format(line, x[0], stat))
                     exit(1)
@@ -124,6 +133,10 @@ class Interpreter:
                     self.Store(instruction)
                 case InstructionType.Push:
                     self.Push(instruction)
+                case InstructionType.Swap:
+                    self.stack[-1], self.stack[-2] = self.stack[-2], self.stack[-1]
+                case InstructionType.Rot:
+                    self.stack[-1], self.stack[-2], self.stack[-3] = self.stack[-3], self.stack[-1], self.stack[-2]
                 case InstructionType.Print:
                     if len(self.stack) == 0:
                         RuntimeError(instruction.line, "Stack had size of 0, but program popped"
@@ -190,6 +203,14 @@ class Interpreter:
                     left = self.stack[-1]
                     right = self.stack[-2]
                     instruction.argument = "i" + str(round(left / right))
+                    self.Push(instruction)
+                case InstructionType.Modulo:
+                    if len(self.stack) < 2:
+                        RuntimeError(Instruction.line, "Modulo instruction needs to values, but the stack has: {}"
+                                     .format(len(self.stack)))
+                    left = self.stack[-1]
+                    right = self.stack[-2]
+                    instruction.argument = "i" + str(left % right)
                     self.Push(instruction)
 
             # Next instruction

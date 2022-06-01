@@ -31,6 +31,11 @@ Put `-d` before your `.funcy` file if you want debug information.
 - `Store <id|null>`: Saves the value on top of stack in a memory register
   - When `Store` has no arguments, it will use the top of the stack as the value and the second to top as memory location. Will free enough memory when there is not enough
 - `Push  <id|expr>`: Pushes a value of a memory register or a value to the top of stack
+- `Swap`: Swaps the top 2 elements on the stack
+- `Rot`: Rotates the top 3 elements on the stack: `0, 1, 2` -> `1, 2, 0`
+
+### IO Instructions
+
 - `Print`: Prints the value on the top of the stack in the terminal
 - `Write`: Prints the value of the top of the stack as ASCII character (Decimal)
 
@@ -45,10 +50,11 @@ Put `-d` before your `.funcy` file if you want debug information.
 
 ### Math Instructions
 
-- `Add`: Reads the top elements on the stack, adds them together and pushes answer to stack
-- `Min`: Reads the top elements on the stack, subtracts them and pushes answer to stack
-- `Multiply`: Reads the top elements on the stack, multiplies them and pushes answer to stack
-- `Divide`: Reads the top elements on the stack, divides them and pushes answer to stack
+- `Add`: Reads the top 2 elements on the stack, adds them together and pushes answer to stack
+- `Min`: Reads the top 2 elements on the stack, subtracts them and pushes answer to stack
+- `Multiply`: Reads the top 2 elements on the stack, multiplies them and pushes answer to stack
+- `Divide`: Reads the top 2 elements on the stack, divides them and pushes answer to stack
+- `Modulo`: Reads the top 2 elements on the stack, modulates them and pushes answer to stack
 
 ### Extra's
 
