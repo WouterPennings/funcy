@@ -134,9 +134,15 @@ class Interpreter:
                 case InstructionType.Push:
                     self.Push(instruction)
                 case InstructionType.Swap:
+                    if len(self.stack) < 2:
+                        RuntimeError(instruction.line, "Stack was smaller than 2, when trying to swap"
+                                     .format(instruction.line))
                     self.stack[-1], self.stack[-2] = self.stack[-2], self.stack[-1]
                 case InstructionType.Rot:
-                    self.stack[-1], self.stack[-2], self.stack[-3] = self.stack[-3], self.stack[-1], self.stack[-2]
+                    if len(self.stack) < 3:
+                        RuntimeError(instruction.line, "Stack was smaller than 3, when trying to rotate"
+                                     .format(instruction.line))
+                    self.stack[-1], self.stack[-2], self.stack[-3] = self.stack[-2], self.stack[-1], self.stack[-3]
                 case InstructionType.Print:
                     if len(self.stack) == 0:
                         RuntimeError(instruction.line, "Stack had size of 0, but program popped"
