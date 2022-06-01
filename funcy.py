@@ -22,18 +22,21 @@ class InstructionType(Enum):
     Modulo = 12
     Swap = 13
     Rot = 14
+    Label = 15
 
 
 class Instruction:
     iType: InstructionType
     argument: str  # Optional
+    count: int
     file: str
     line: int
     column: int
 
-    def __init__(self, iType, argument, filename, line, ):
+    def __init__(self, iType, argument, count, filename, line, ):
         self.iType = iType
         self.argument = argument
+        self.count = count
         self.file = filename
         self.line = line
 
@@ -50,59 +53,70 @@ def RuntimeError(line, text):
 
 def ParseInstructions(statements):
     instructions = []
+    labels = []
     line = 1
+    count = 0
     for stat in statements:
         if len(stat) > 0 and stat[0] != ';':
             x = stat.split()
             match x[0]:
                 case "Pop":
-                    instructions.append(Instruction(InstructionType.Pop, "", file, line))
+                    instructions.append(Instruction(InstructionType.Pop, "", count, file, line))
                 case "Store":
                     if len(x) < 2:
-                        instructions.append(Instruction(InstructionType.Store, "", file, line))
+                        instructions.append(Instruction(InstructionType.Store, "", count, file, line))
                     elif not x[1].isnumeric():
                         print("Syntax Error {}: Store needs to be and index\n   {}".format(line, stat))
                         exit(1)
                     else:
-                        instructions.append(Instruction(InstructionType.Store, x[1], file, line))
+                        instructions.append(Instruction(InstructionType.Store, x[1], count, file, line))
                 case "Push":
                     if not x[1][0] == "i" and not x[1].isnumeric():
                         print(
                             "Syntax Error {}: Push needs to be either an integer or an index\n   {}".format(line, stat))
                         exit(1)
-                    instructions.append(Instruction(InstructionType.Push, x[1], file, line))
+                    instructions.append(Instruction(InstructionType.Push, x[1], count, file, line))
                 case "Print":
-                    instructions.append(Instruction(InstructionType.Print, "", file, line))
+                    instructions.append(Instruction(InstructionType.Print, "", count, file, line))
                 case "Write":
-                    instructions.append(Instruction(InstructionType.Write, "", file, line))
+                    instructions.append(Instruction(InstructionType.Write, "", count, file, line))
                 case "Equal":
-                    instructions.append(Instruction(InstructionType.Equal, "", file, line))
+                    instructions.append(Instruction(InstructionType.Equal, "", count, file, line))
                 case "Greater":
-                    instructions.append(Instruction(InstructionType.Greater, "", file, line))
+                    instructions.append(Instruction(InstructionType.Greater, "", count, file, line))
                 case "Jump":
-                    if not x[1].isnumeric():
-                        print("Syntax Error {}: Jump needs to be an instruction index\n   {}".format(line, stat))
+                    if not x[1].isupper():
+                        print("Syntax Error {}: Jump needs to be an label, labels are always all capital\n   {}".format(line, stat))
                         exit(1)
-                    instructions.append(Instruction(InstructionType.Jump, x[1], file, line))
+                    instructions.append(Instruction(InstructionType.Jump, x[1], count, file, line))
                 case "Add":
-                    instructions.append(Instruction(InstructionType.Add, "", file, line))
+                    instructions.append(Instruction(InstructionType.Add, "", count, file, line))
                 case "Min":
-                    instructions.append(Instruction(InstructionType.Min, "", file, line))
+                    instructions.append(Instruction(InstructionType.Min, "", count, file, line))
                 case "Multiply":
-                    instructions.append(Instruction(InstructionType.Multiply, "", file, line))
+                    instructions.append(Instruction(InstructionType.Multiply, "", count, file, line))
                 case "Divide":
-                    instructions.append(Instruction(InstructionType.Divide, "", file, line))
+                    instructions.append(Instruction(InstructionType.Divide, "", count, file, line))
                 case "Modulo":
-                    instructions.append(Instruction(InstructionType.Modulo, "", file, line))
+                    instructions.append(Instruction(InstructionType.Modulo, "", count, file, line))
                 case "Swap":
-                    instructions.append(Instruction(InstructionType.Swap, "", file, line))
+                    instructions.append(Instruction(InstructionType.Swap, "", count, file, line))
                 case "Rot":
-                    instructions.append(Instruction(InstructionType.Rot, "", file, line))
+                    instructions.append(Instruction(InstructionType.Rot, "", count, file, line))
                 case _:
-                    print("Syntax Error {}: '{}' is not an instruction\n   {}".format(line, x[0], stat))
-                    exit(1)
+                    if x[0][-1] == ":":
+                        if x[0][:-1].isupper():
+                            labels.append(Instruction(InstructionType.Label, x[0][:-1], count, file, line))
+                            count -= 1
+                        else:
+                            print("Syntax Error {}: '{}' label needs to be all caps only alphabetic\n   {}".format(line, x[0], stat))
+                            exit(1)
+                    else:
+                        print("Syntax Error {}: '{}' is not an instruction\n   {}".format(line, x[0], stat))
+                        exit(1)
+            count += 1
         line += 1
-    return instructions, line
+    return instructions, labels, line
 
 
 STACK_SIZE = 4
@@ -115,10 +129,14 @@ class Interpreter:
     cursor: int  # Current instruction
     lines: int
 
-    def __init__(self, instructions, lines):
+    def __init__(self, instructions, labels, lines):
         self.instructions = instructions
         self.lines = lines
         self.cursor = 0
+
+        self.labels = [(str, int)]
+        for lab in labels:
+            self.labels.append((lab.argument, lab.count))
 
         self.memory = []
         self.stack = []
@@ -170,11 +188,17 @@ class Interpreter:
                     if left > right:
                         self.cursor += 1
                 case InstructionType.Jump:
-                    if len(self.instructions) < int(instruction.argument):
-                        RuntimeError(Instruction.line, "Jump instruction jumps to line that does not exists, "
-                                                       "there are: {} lines".format(instruction.line, self.lines))
-                    # There is a -1, because every loop is + 1. AKA compensation
-                    self.cursor = int(instruction.argument) - 2
+                    if instruction.argument in self.labels[0]:
+                        RuntimeError(Instruction.line, "Jump instruction jumps to a label that does not exists"
+                                     .format(instruction.line, self.lines))
+
+                    names = [x[0] for x in self.labels]
+                    index = names.index(instruction.argument)
+                    if self.labels[index][1] > self.cursor:
+                        self.cursor = self.labels[index][1] - 1
+                    else:
+                        self.cursor = self.labels[index][1]
+                    #print(self.labels[index])
                 case InstructionType.Add:
                     if len(self.stack) < 2:
                         RuntimeError(instruction.line, "Add instruction needs to values, but the stack has: {}"
@@ -218,7 +242,8 @@ class Interpreter:
                     right = self.stack[-2]
                     instruction.argument = "i" + str(left % right)
                     self.Push(instruction)
-
+                case InstructionType.Label:
+                    self.labels.append((instruction.argument, self.cursor))
             # Next instruction
             self.cursor += 1
 
@@ -283,14 +308,14 @@ if __name__ == "__main__":
     # Actually running the interpreter
     f = open(file, "r")
     statements = f.read().split("\n")
-    instructions, lines = ParseInstructions(statements)
+    instructions, labels, lines = ParseInstructions(statements)
     if debug:
         print("\nDEBUG INFO BEGIN:")
         print("    INSTRUCTIONS:")
         for i in instructions:
             print("        {}".format(i))
         print("DEBUG INFO END\n")
-    interpreter = Interpreter(instructions, lines)
+    interpreter = Interpreter(instructions, labels, lines)
     interpreter.Evaluate()
     end = time.time()
 

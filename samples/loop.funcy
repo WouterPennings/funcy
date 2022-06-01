@@ -1,14 +1,16 @@
-Push i100
+Push i2
 Push i1
 
+BEGIN:
 Equal
-Jump 11
+Jump END
 Push i1
 Add
 Rot
 Pop
 Pop
-Jump 3
+Jump BEGIN
 
+END:
 Print
 Pop

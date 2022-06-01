@@ -23,7 +23,7 @@ Put `-d` before your `.funcy` file if you want debug information.
 
 - `id`: Index of element in memory
 - `expr`: 32-bit integer, you have to put an 'i' before the number (`i1234`)
-- `inst`: Index of instruction
+- `ident`: identifier for labels
 
 ### Data Instructions
 
@@ -46,7 +46,8 @@ Put `-d` before your `.funcy` file if you want debug information.
 
 ### Flow Instructions
 
-- `Jump <inst>` Jumps to index of the instruction specified
+- `Jump <ident>` Jumps to index of the instruction specified
+- `<ident>:`: A name of a label to jump to
 
 ### Math Instructions
 
