@@ -6,16 +6,8 @@ Write
 Push i101
 Write
 
-; 'l'
-Push i108
-Write
-
-; 'l'
-Push i108
-Write
-
-; 'o'
-Push i111
+; 'y'
+Push i121
 Write
 
 ; '\n'
@@ -23,8 +15,6 @@ Push i10
 Write
 
 ; Emptying the stack
-Pop
-Pop
 Pop
 Pop
 Pop

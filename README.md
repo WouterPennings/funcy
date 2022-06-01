@@ -15,7 +15,7 @@ Put `-d` before your `.funcy` file if you want debug information.
 
 ## Specification
 
-- A stack of 8 elements is created which stores integers
+- A stack of 4 elements is created which stores integers
 - You get an infinitely growable chunk of memory, **you can never give memory back to the system**
 - This is a safe language meaning in this case that instructions never pop from stack. Only possible with specific instruction
 

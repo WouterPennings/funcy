@@ -105,7 +105,7 @@ def ParseInstructions(statements):
     return instructions, line
 
 
-STACK_SIZE = 8
+STACK_SIZE = 4
 
 
 class Interpreter:
