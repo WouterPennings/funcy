@@ -54,7 +54,7 @@ Put `-d` before your `.funcy` file if you want debug information.
 - `Min`: Reads the top 2 elements on the stack, subtracts them and pushes answer to stack
 - `Multiply`: Reads the top 2 elements on the stack, multiplies them and pushes answer to stack
 - `Divide`: Reads the top 2 elements on the stack, divides them and pushes answer to stack
-- `Modulo`: Reads the top 2 elements on the stack, modulates them and pushes answer to stack
+- `Modulo`: Reads the top 2 elements on the stack, pushes the remainder to the stack
 
 ### Extra's
 
