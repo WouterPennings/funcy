@@ -15,7 +15,4 @@ Push i10
 Write
 
 ; Emptying the stack
-Pop
-Pop
-Pop
-Pop
+Clear

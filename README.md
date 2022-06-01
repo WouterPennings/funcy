@@ -33,6 +33,7 @@ Put `-d` before your `.funcy` file if you want debug information.
 - `Push  <id|expr>`: Pushes a value of a memory register or a value to the top of stack
 - `Swap`: Swaps the top 2 elements on the stack
 - `Rot`: Rotates the top 3 elements on the stack: `0, 1, 2` -> `1, 2, 0`
+- `Clear`: Empties the stack
 
 ### IO Instructions
 
