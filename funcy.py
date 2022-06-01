@@ -142,7 +142,7 @@ class Interpreter:
                     if len(self.stack) < 3:
                         RuntimeError(instruction.line, "Stack was smaller than 3, when trying to rotate"
                                      .format(instruction.line))
-                    self.stack[-1], self.stack[-2], self.stack[-3] = self.stack[-2], self.stack[-1], self.stack[-3]
+                    self.stack[-1], self.stack[-2], self.stack[-3] = self.stack[-2], self.stack[-3], self.stack[-1]
                 case InstructionType.Print:
                     if len(self.stack) == 0:
                         RuntimeError(instruction.line, "Stack had size of 0, but program popped"

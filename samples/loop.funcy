@@ -1,19 +1,14 @@
+Push i100
 Push i1
-Store 1
-Pop
 
-Push i10000
-Push 1
 Equal
-Jump 15
+Jump 11
 Push i1
 Add
-Store 1
+Rot
 Pop
 Pop
-Pop
-Jump 5
+Jump 3
 
-Push 1
 Print
 Pop
