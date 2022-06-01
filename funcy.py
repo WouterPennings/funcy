@@ -23,11 +23,12 @@ class InstructionType(Enum):
     Swap = 13
     Rot = 14
     Label = 15
+    Clear = 16
 
 
 class Instruction:
     iType: InstructionType
-    argument: str  # Optional
+    argument: str
     count: int
     file: str
     line: int
@@ -103,6 +104,8 @@ def ParseInstructions(statements):
                     instructions.append(Instruction(InstructionType.Swap, "", count, file, line))
                 case "Rot":
                     instructions.append(Instruction(InstructionType.Rot, "", count, file, line))
+                case "Clear":
+                    instructions.append(Instruction(InstructionType.Clear, "", count, file, line))
                 case _:
                     if x[0][-1] == ":":
                         if x[0][:-1].isupper():
@@ -244,6 +247,8 @@ class Interpreter:
                     self.Push(instruction)
                 case InstructionType.Label:
                     self.labels.append((instruction.argument, self.cursor))
+                case InstructionType.Clear:
+                    self.stack = []
             # Next instruction
             self.cursor += 1
 
