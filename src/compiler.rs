@@ -12,13 +12,45 @@ pub struct Compiler {
 
 impl Compiler {
     pub fn new(program: Program) -> Compiler {
+        let header = "
+void read_file() {
+    // Pointers to where to find filename and put result
+    int filename_ptr = MEMORY[0];
+    int content_ptr = MEMORY[1];
+
+    // Getting the filename
+    char* filename = malloc(128);
+    int fn_size = 0;
+    do {
+        filename[fn_size++] = MEMORY[filename_ptr];
+    } while(MEMORY[filename_ptr++] != '\\0');
+
+    FILE* fp = fopen(filename, \"r\");
+    // Get size of file
+    fseek(fp, 0L, SEEK_END);
+    const int sz = ftell(fp);
+    rewind(fp);
+    // Reserve big enough chunk of memory for file
+    char* str = malloc(sz + 1);
+
+    // Adding characters to string
+    int count = 0;
+    do {
+        int c = fgetc(fp);
+        MEMORY[content_ptr++] = c;
+    } while(!feof(fp));
+    fclose(fp); // Closing the file stream
+
+    MEMORY[--content_ptr] = '\\0'; // Adding null terminator, otherwise string will be weird
+}\n".to_string();
+
         Compiler {
             program,
             cursor: 0,
-            imports: vec!["#include<stdio.h>".to_string()],
+            imports: vec!["#include<stdio.h>".to_string(), "#include <stdlib.h>".to_string()],
             functions: vec![],
             current_function: String::from(""),
-            code: String::from(""),
+            code: header.clone(),
         }
     }
 
@@ -37,7 +69,7 @@ impl Compiler {
         }
 
         // Defining memory
-        let memory = "// Instantiating of the emulated memory\nint MEMORY[255];\n";
+        let memory = "// Instantiating of the emulated memory\nint MEMORY[1024];\n";
 
         // Adding the user defined functions to the program.
         let mut funcs = String::new();
@@ -46,7 +78,7 @@ impl Compiler {
             funcs.push_str("\n\n");
         }
 
-        self.code = format!("{}\n{}\n{}\n{}", imports, memory, funcs, self.code);
+        self.code = format!("{}\n{}\n{}\n{}", imports, memory, self.code, funcs);
     }
 
     fn compile_statement(&mut self, stat: Instruction) {
