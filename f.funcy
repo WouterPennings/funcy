@@ -1,0 +1,601 @@
+.create_header
+    store @1000 35
+    store @1001 105
+    store @1002 110
+    store @1003 99
+    store @1004 108
+    store @1005 117
+    store @1006 100
+    store @1007 101
+    store @1008 60
+    store @1009 115
+    store @1010 116
+    store @1011 100
+    store @1012 105
+    store @1013 111
+    store @1014 46
+    store @1015 104
+    store @1016 62
+    store @1017 35
+    store @1018 105
+    store @1019 110
+    store @1020 99
+    store @1021 108
+    store @1022 117
+    store @1023 100
+    store @1024 101
+    store @1025 32
+    store @1026 60
+    store @1027 115
+    store @1028 116
+    store @1029 100
+    store @1030 108
+    store @1031 105
+    store @1032 98
+    store @1033 46
+    store @1034 104
+    store @1035 62
+    store @1036 115
+    store @1037 116
+    store @1038 97
+    store @1039 116
+    store @1040 105
+    store @1041 99
+    store @1042 32
+    store @1043 105
+    store @1044 110
+    store @1045 116
+    store @1046 32
+    store @1047 77
+    store @1048 69
+    store @1049 77
+    store @1050 79
+    store @1051 82
+    store @1052 89
+    store @1053 91
+
+    store @1054 49
+    store @1055 48
+    store @1056 48
+    store @1057 48
+    store @1058 48
+    store @1059 48
+    store @1060 48
+    store @1061 48
+    store @1062 48
+
+    store @1063 93
+    store @1064 59
+    store @1065 118
+    store @1066 111
+    store @1067 105
+    store @1068 100
+    store @1069 32
+    store @1070 114
+    store @1071 101
+    store @1072 97
+    store @1073 100
+    store @1074 95
+    store @1075 102
+    store @1076 105
+    store @1077 108
+    store @1078 101
+    store @1079 40
+    store @1080 41
+    store @1081 123
+    store @1082 105
+    store @1083 110
+    store @1084 116
+    store @1085 32
+    store @1086 102
+    store @1087 105
+    store @1088 108
+    store @1089 101
+    store @1090 110
+    store @1091 97
+    store @1092 109
+    store @1093 101
+    store @1094 95
+    store @1095 112
+    store @1096 116
+    store @1097 114
+    store @1098 61
+    store @1099 77
+    store @1100 69
+    store @1101 77
+    store @1102 79
+    store @1103 82
+    store @1104 89
+    store @1105 91
+    store @1106 48
+    store @1107 93
+    store @1108 59
+    store @1109 105
+    store @1110 110
+    store @1111 116
+    store @1112 32
+    store @1113 99
+    store @1114 111
+    store @1115 110
+    store @1116 116
+    store @1117 101
+    store @1118 110
+    store @1119 116
+    store @1120 95
+    store @1121 112
+    store @1122 116
+    store @1123 114
+    store @1124 61
+    store @1125 77
+    store @1126 69
+    store @1127 77
+    store @1128 79
+    store @1129 82
+    store @1130 89
+    store @1131 91
+    store @1132 49
+    store @1133 93
+    store @1134 59
+    store @1135 99
+    store @1136 104
+    store @1137 97
+    store @1138 114
+    store @1139 42
+    store @1140 32
+    store @1141 102
+    store @1142 105
+    store @1143 108
+    store @1144 101
+    store @1145 110
+    store @1146 97
+    store @1147 109
+    store @1148 101
+    store @1149 61
+    store @1150 109
+    store @1151 97
+    store @1152 108
+    store @1153 108
+    store @1154 111
+    store @1155 99
+    store @1156 40
+    store @1157 49
+    store @1158 50
+    store @1159 56
+    store @1160 41
+    store @1161 59
+    store @1162 105
+    store @1163 110
+    store @1164 116
+    store @1165 32
+    store @1166 102
+    store @1167 110
+    store @1168 95
+    store @1169 115
+    store @1170 105
+    store @1171 122
+    store @1172 101
+    store @1173 61
+    store @1174 48
+    store @1175 59
+    store @1176 100
+    store @1177 111
+    store @1178 123
+    store @1179 102
+    store @1180 105
+    store @1181 108
+    store @1182 101
+    store @1183 110
+    store @1184 97
+    store @1185 109
+    store @1186 101
+    store @1187 91
+    store @1188 102
+    store @1189 110
+    store @1190 95
+    store @1191 115
+    store @1192 105
+    store @1193 122
+    store @1194 101
+    store @1195 43
+    store @1196 43
+    store @1197 93
+    store @1198 32
+    store @1199 61
+    store @1200 32
+    store @1201 77
+    store @1202 69
+    store @1203 77
+    store @1204 79
+    store @1205 82
+    store @1206 89
+    store @1207 91
+    store @1208 102
+    store @1209 105
+    store @1210 108
+    store @1211 101
+    store @1212 110
+    store @1213 97
+    store @1214 109
+    store @1215 101
+    store @1216 95
+    store @1217 112
+    store @1218 116
+    store @1219 114
+    store @1220 93
+    store @1221 59
+    store @1222 125
+    store @1223 119
+    store @1224 104
+    store @1225 105
+    store @1226 108
+    store @1227 101
+    store @1228 40
+    store @1229 77
+    store @1230 69
+    store @1231 77
+    store @1232 79
+    store @1233 82
+    store @1234 89
+    store @1235 91
+    store @1236 102
+    store @1237 105
+    store @1238 108
+    store @1239 101
+    store @1240 110
+    store @1241 97
+    store @1242 109
+    store @1243 101
+    store @1244 95
+    store @1245 112
+    store @1246 116
+    store @1247 114
+    store @1248 43
+    store @1249 43
+    store @1250 93
+    store @1251 33
+    store @1252 61
+    store @1253 39
+    store @1254 92
+    store @1255 48
+    store @1256 39
+    store @1257 41
+    store @1258 59
+    store @1259 70
+    store @1260 73
+    store @1261 76
+    store @1262 69
+    store @1263 42
+    store @1264 32
+    store @1265 102
+    store @1266 112
+    store @1267 61
+    store @1268 102
+    store @1269 111
+    store @1270 112
+    store @1271 101
+    store @1272 110
+    store @1273 40
+    store @1274 102
+    store @1275 105
+    store @1276 108
+    store @1277 101
+    store @1278 110
+    store @1279 97
+    store @1280 109
+    store @1281 101
+    store @1282 44
+    store @1283 34
+    store @1284 114
+    store @1285 34
+    store @1286 41
+    store @1287 59
+    store @1288 102
+    store @1289 115
+    store @1290 101
+    store @1291 101
+    store @1292 107
+    store @1293 40
+    store @1294 102
+    store @1295 112
+    store @1296 44
+    store @1297 48
+    store @1298 76
+    store @1299 44
+    store @1300 83
+    store @1301 69
+    store @1302 69
+    store @1303 75
+    store @1304 95
+    store @1305 69
+    store @1306 78
+    store @1307 68
+    store @1308 41
+    store @1309 59
+    store @1310 99
+    store @1311 111
+    store @1312 110
+    store @1313 115
+    store @1314 116
+    store @1315 32
+    store @1316 105
+    store @1317 110
+    store @1318 116
+    store @1319 32
+    store @1320 115
+    store @1321 122
+    store @1322 61
+    store @1323 102
+    store @1324 116
+    store @1325 101
+    store @1326 108
+    store @1327 108
+    store @1328 40
+    store @1329 102
+    store @1330 112
+    store @1331 41
+    store @1332 59
+    store @1333 114
+    store @1334 101
+    store @1335 119
+    store @1336 105
+    store @1337 110
+    store @1338 100
+    store @1339 40
+    store @1340 102
+    store @1341 112
+    store @1342 41
+    store @1343 59
+    store @1344 99
+    store @1345 104
+    store @1346 97
+    store @1347 114
+    store @1348 42
+    store @1349 32
+    store @1350 115
+    store @1351 116
+    store @1352 114
+    store @1353 61
+    store @1354 109
+    store @1355 97
+    store @1356 108
+    store @1357 108
+    store @1358 111
+    store @1359 99
+    store @1360 40
+    store @1361 115
+    store @1362 122
+    store @1363 43
+    store @1364 49
+    store @1365 41
+    store @1366 59
+    store @1367 105
+    store @1368 110
+    store @1369 116
+    store @1370 32
+    store @1371 99
+    store @1372 111
+    store @1373 117
+    store @1374 110
+    store @1375 116
+    store @1376 61
+    store @1377 48
+    store @1378 59
+    store @1379 100
+    store @1380 111
+    store @1381 123
+    store @1382 105
+    store @1383 110
+    store @1384 116
+    store @1385 32
+    store @1386 99
+    store @1387 61
+    store @1388 102
+    store @1389 103
+    store @1390 101
+    store @1391 116
+    store @1392 99
+    store @1393 40
+    store @1394 102
+    store @1395 112
+    store @1396 41
+    store @1397 59
+    store @1398 77
+    store @1399 69
+    store @1400 77
+    store @1401 79
+    store @1402 82
+    store @1403 89
+    store @1404 91
+    store @1405 99
+    store @1406 111
+    store @1407 110
+    store @1408 116
+    store @1409 101
+    store @1410 110
+    store @1411 116
+    store @1412 95
+    store @1413 112
+    store @1414 116
+    store @1415 114
+    store @1416 43
+    store @1417 43
+    store @1418 93
+    store @1419 61
+    store @1420 99
+    store @1421 59
+    store @1422 125
+    store @1423 119
+    store @1424 104
+    store @1425 105
+    store @1426 108
+    store @1427 101
+    store @1428 40
+    store @1429 33
+    store @1430 102
+    store @1431 101
+    store @1432 111
+    store @1433 102
+    store @1434 40
+    store @1435 102
+    store @1436 112
+    store @1437 41
+    store @1438 41
+    store @1439 59
+    store @1440 102
+    store @1441 99
+    store @1442 108
+    store @1443 111
+    store @1444 115
+    store @1445 101
+    store @1446 40
+    store @1447 102
+    store @1448 112
+    store @1449 41
+    store @1450 59
+    store @1451 77
+    store @1452 69
+    store @1453 77
+    store @1454 79
+    store @1455 82
+    store @1456 89
+    store @1457 91
+    store @1458 45
+    store @1459 45
+    store @1460 99
+    store @1461 111
+    store @1462 110
+    store @1463 116
+    store @1464 101
+    store @1465 110
+    store @1466 116
+    store @1467 95
+    store @1468 112
+    store @1469 116
+    store @1470 114
+    store @1471 93
+    store @1472 61
+    store @1473 39
+    store @1474 92
+    store @1475 48
+    store @1476 39
+    store @1477 59
+    store @1478 32
+    store @1479 32
+    store @1480 32
+    store @1481 32
+    store @1482 32
+    store @1483 32
+    store @1484 32
+    store @1485 125
+    store @1486 0
+
+    ret
+
+.import_f
+    ; t.funcy
+    store @3 116
+    store @4 46
+    store @5 102
+    store @6 117
+    store @7 110
+    store @8 99
+    store @9 121
+    store @10 0
+
+    store @0 3
+
+    call read_file
+    ret
+
+.size
+    store @1 0
+    one:
+    eql @@0 0
+    jmp two
+    add @0 1
+    add @1 1
+    jmp one
+    two:
+    store @10 @1
+    ret
+
+.replace_newlines
+    store @10 @100
+    begin:
+    eql @@10 10
+    store @@10 32
+    eql @@10 0
+    jmp stop
+    add @10 1
+    jmp begin
+    stop:
+    ret
+
+.remove_comments
+    store @0 @100
+
+    begin:
+    eql @@0 59
+    jmp true
+    jmp false
+
+    true:
+    store @@0 32
+    x:
+    add @0 1
+    eql @@0 10
+    jmp begin
+    store @@0 32
+    jmp x
+
+    false:
+    eql @@0 0
+    jmp end
+    add @0 1
+    jmp begin
+
+    end:
+
+    store @0 10
+    call print_str
+
+    ret
+
+.get_word
+    store @11 200
+    begin:
+    eql @@100 32
+    jmp stop
+    store @@11 @@100
+    add @11 1
+    add @100 1
+    jmp begin
+    stop:
+    store @@11 0
+    ret
+
+.main
+    ; @100 is the location of the current location of the current character
+    store @100 1000
+
+    ; imports the .funcy file starting at location 1000
+    store @1 @100
+    call import_f
+    store @0 @100
+
+    ; Removes comments
+    call remove_comments
+
+    ; Replaces all the new lines with spaces
+    call replace_newlines
+
+    ; Current cleaned up state of inputted code
+    store @0 @100
+    call print_str
+
+
+    ; Automatically does a newline at end of program
+    store @0 10
+    write @0
+
+    ret

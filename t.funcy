@@ -1,0 +1,4 @@
+test 1
+; comments are removed
+; And new lines are replaced with spaces
+print 123 123
