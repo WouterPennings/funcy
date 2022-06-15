@@ -1,0 +1,24 @@
+; You need to have a main function otherwise your code wont run
+.main
+    store @10 72 ; 'H'
+    store @11 69 ; 'E'
+    store @12 76 ; 'L'
+    store @13 76 ; 'L'
+    store @14 79 ; 'O'
+    store @15 44 ; ','
+    store @16 32 ; ' '
+    store @17 87 ; 'W'
+    store @18 79 ; 'O'
+    store @19 82 ; 'R'
+    store @20 76 ; 'L'
+    store @21 68 ; 'D'
+    store @22 33 ; '!'
+    store @23 0  ; '\0'
+
+    ; print_str expects the first memory spot the be the memory
+    ; location of the start of the string. It will print until a '\0'
+    store @0 10
+    call print_str
+
+    ; A return means: end of function. It does not actually return a value
+    ret
