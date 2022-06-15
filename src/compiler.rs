@@ -69,7 +69,7 @@ void read_file() {
         }
 
         // Defining memory
-        let memory = "// Instantiating of the emulated memory\nint MEMORY[1024];\n";
+        let memory = "// Instantiating of the emulated memory\nint MEMORY[1000000000];\n";
 
         // Adding the user defined functions to the program.
         let mut funcs = String::new();
